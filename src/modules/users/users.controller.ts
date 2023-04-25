@@ -1,6 +1,6 @@
 import { Controller, Post, Body, Get, Param, Delete, Put } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { Seller } from '@prisma/client';
+import { Seller } from 'src/dto/seller.dto'; 
 
 @Controller('v1/users')
 export class UsersController {
