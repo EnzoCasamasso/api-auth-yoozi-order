@@ -1,0 +1,80 @@
+// This is your Prisma schema file,
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Business {
+  id                     String             @id @default(uuid())
+  name                   String             @unique
+  email                  String             @unique
+  sellers                Seller[]           @relation("businessSellers")
+  products               Product[]          @relation("businessProducts")
+  clients                Client[]           @relation("businessClient")
+}
+
+model Seller {
+  id                     String             @id @default(uuid())
+  userName               String?            @unique
+  email                  String             @unique
+  business               Business           @relation("businessSellers", fields: [businessId], references: [id])
+  businessId             String
+  clients                Client[]           @relation("sellerClient")
+}
+
+model Product {
+  id                    String              @id @default(uuid())
+  description           String              @unique
+  salePrice             Float       
+  costPrice             Float
+  margin                Int?
+  business              Business            @relation("businessProducts", fields: [businessId], references: [id])
+  businessId            String
+  creationDate          DateTime
+}
+
+model Client {
+  id                    String              @id @default(uuid())
+  name                  String
+  orders                Order[]             @relation("clientOrder")
+  clientContact         ClientContact?      @relation("clientContact")
+  clientContactId       String?             @unique
+  seller                Seller              @relation("sellerClient", fields: [sellerId], references: [id])
+  sellerId              String   
+  business              Business            @relation("businessClient", fields: [businessId], references: [id])
+  businessId            String             
+}
+
+model ClientContact {
+  id                    String              @id @default(uuid())
+  client                Client              @relation("clientContact", fields: [clientId], references: [id])
+  clientId              String              @unique
+  city                  String
+  zipCode               String
+  state                 String
+  neighborhood          String
+  numberHouse           String              @unique
+  cellphoneNumber       String
+}
+
+model OrderItem {
+  id                    String              @id @default(uuid())
+  productName           String
+  order                 Order               @relation("orderItems", fields: [orderId], references: [id])
+  orderId               String
+  amount                Int
+  subtotal              Float
+}
+
+model Order {
+  id                    String              @id @default(uuid())
+  client                Client              @relation("clientOrder",  fields: [clientId], references: [id])
+  clientId              String
+  orderItems            OrderItem[]         @relation("orderItems")
+  orderDate             DateTime
+  totalOrder            Float
+}
