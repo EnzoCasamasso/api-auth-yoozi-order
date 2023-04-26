@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsNumber, IsString, IsUUID } from "class-validator";
-
+import { OrderDto } from "./order.dto";
 export class OrderItem {
     @IsUUID()
     @IsString()
@@ -11,7 +11,7 @@ export class OrderItem {
     productName: string;
 
     @IsNotEmpty()
-    order: any; //tipar da forma correta 
+    order: OrderDto; //tipar da forma correta 
 
     @IsNotEmpty()
     orderId: string;

@@ -10,7 +10,7 @@ datasource db {
 
 model Business {
   id                     String             @id @default(uuid())
-  name                   String             @unique
+  businessName           String             @unique
   email                  String             @unique
   sellers                Seller[]           @relation("businessSellers")
   products               Product[]          @relation("businessProducts")

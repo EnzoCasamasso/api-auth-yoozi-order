@@ -1,4 +1,5 @@
 import { IsArray, IsNotEmpty, IsOptional, IsString, IsUUID } from "class-validator";
+import { ClientDto } from "./client/client.dto";
 
 export class Seller {
     @IsString()
@@ -19,5 +20,5 @@ export class Seller {
 
     @IsOptional()
     @IsArray()
-    clients: any[];  //tipar corretamente
+    clients: ClientDto[];  //tipar corretamente
 }
