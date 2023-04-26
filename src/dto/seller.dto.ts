@@ -1,7 +1,7 @@
-import { IsArray, IsNotEmpty, IsOptional, IsString, IsUUID } from "class-validator";
+import { IsArray, IsEmail, IsNotEmpty, IsOptional, IsString, IsUUID } from "class-validator";
 import { ClientDto } from "./client/client.dto";
-
-export class Seller {
+import { BusinessDto } from "./business.dto";
+export class SellerDto {
     @IsString()
     @IsNotEmpty()
     @IsUUID()
@@ -11,8 +11,15 @@ export class Seller {
     @IsNotEmpty()
     userName: string;
 
+    @IsEmail()
+    email: string;
+
     @IsNotEmpty()
-    business: any; //criar dto business
+    business: BusinessDto;
+
+    @IsString()
+    @IsNotEmpty()
+    businessName: string;
 
     @IsNotEmpty()
     @IsString()
@@ -20,5 +27,5 @@ export class Seller {
 
     @IsOptional()
     @IsArray()
-    clients: ClientDto[];  //tipar corretamente
+    clients: ClientDto[]; 
 }

@@ -1,6 +1,7 @@
 import { IsArray, IsEmail, IsNotEmpty, IsString, IsUUID } from "class-validator";
 import { ProductDto } from "./product.dto";
 import { ClientDto } from "./client/client.dto";
+import { SellerDto } from "./seller.dto";
 
 export class BusinessDto {
     @IsString()
@@ -15,6 +16,10 @@ export class BusinessDto {
     @IsEmail()
     @IsNotEmpty()
     email: string;
+
+    @IsArray()
+    @IsNotEmpty()
+    sellers: SellerDto[]
 
     @IsArray()
     products: ProductDto[];
