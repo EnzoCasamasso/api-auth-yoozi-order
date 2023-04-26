@@ -1,7 +1,7 @@
 -- CreateTable
 CREATE TABLE "Business" (
     "id" TEXT NOT NULL PRIMARY KEY,
-    "name" TEXT NOT NULL,
+    "businessName" TEXT NOT NULL,
     "email" TEXT NOT NULL
 );
 
@@ -70,7 +70,7 @@ CREATE TABLE "Order" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Business_name_key" ON "Business"("name");
+CREATE UNIQUE INDEX "Business_businessName_key" ON "Business"("businessName");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Business_email_key" ON "Business"("email");
