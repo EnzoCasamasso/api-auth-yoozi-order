@@ -17,7 +17,7 @@ export class UsersService {
     }
 
 
-    async getAllSellers(): Promise<Seller[]> {
+    async getAllSellers() {
         const users = await this.prisma.seller.findMany();
     
         if (users.length > 0) {
