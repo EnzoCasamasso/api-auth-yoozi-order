@@ -1,9 +1,24 @@
+import { IsNotEmpty, IsNumber, IsOptional, IsString, IsUUID } from "class-validator";
+
 export class Product {
-    constructor(
-        public id: string,
-        public description: string,
-        public salePrice: number,
-        public costPrice: number,
-        public margin?: number
-    ) { }
+    @IsNotEmpty()
+    @IsString()
+    @IsUUID()
+    id: string;
+
+    @IsString()
+    @IsNotEmpty()
+    description: string;
+
+    @IsNumber()
+    @IsNotEmpty()
+    salePrice: number;
+
+    @IsNumber()
+    @IsNotEmpty()
+    costPrice: number;
+
+    @IsNumber()
+    @IsOptional()
+    margin: number;
 }

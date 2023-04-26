@@ -1,9 +1,23 @@
+import { IsArray, IsNotEmpty, IsOptional, IsString, IsUUID } from "class-validator";
+
 export class ClientDto {
-    constructor(
-        public id: string,
-        public name: string,
-        public orders?: any[],
-        public clientcontact?: any,
-        public clientContactId?: string
-    ) {}
+    @IsString()
+    @IsUUID()
+    @IsNotEmpty()
+    id: string;
+
+    @IsNotEmpty()
+    @IsString()
+    name: string;
+
+    @IsArray()
+    @IsOptional()
+    orders: any[] //tipar da forma correta
+
+    @IsOptional()
+    clientContact: any //tipar da forma correta
+    
+    @IsOptional()
+    @IsString()
+    clienteContactId: string
 }

@@ -1,10 +1,25 @@
+import { IsNotEmpty, IsNumber, IsString, IsUUID } from "class-validator";
+
 export class OrderItem {
-    constructor(
-       public id: string,
-       public productName: string,
-       public order: any,
-       public orderId: string,
-       public amount: number,
-       public subtotal: number      
-    ) { }
+    @IsUUID()
+    @IsString()
+    @IsNotEmpty()
+    id: string;
+
+    @IsString()
+    @IsNotEmpty()
+    productName: string;
+
+    @IsNotEmpty()
+    order: any; //tipar da forma correta 
+
+    @IsNotEmpty()
+    orderId: string;
+
+    @IsNumber()
+    @IsNotEmpty()
+    amount: number;
+
+    @IsNumber()
+    subtotal: number;
 }
