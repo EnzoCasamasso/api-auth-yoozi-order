@@ -19,7 +19,7 @@ export class BusinessDto {
 
     @IsArray()
     @IsNotEmpty()
-    sellers: SellerDto[]
+    sellers: SellerDto[];
 
     @IsArray()
     products: ProductDto[];

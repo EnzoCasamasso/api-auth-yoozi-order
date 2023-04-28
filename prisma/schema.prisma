@@ -22,6 +22,7 @@ model Seller {
   userName               String?            @unique
   email                  String             @unique
   business               Business           @relation("businessSellers", fields: [businessId], references: [id])
+  businessName           String             
   businessId             String
   clients                Client[]           @relation("sellerClient")
 }
@@ -35,6 +36,8 @@ model Product {
   business              Business            @relation("businessProducts", fields: [businessId], references: [id])
   businessId            String
   creationDate          DateTime
+
+  @@map("products")
 }
 
 model Client {
@@ -43,8 +46,8 @@ model Client {
   orders                Order[]             @relation("clientOrder")
   clientContact         ClientContact?      @relation("clientContact")
   clientContactId       String?             @unique
-  seller                Seller              @relation("sellerClient", fields: [sellerId], references: [id])
-  sellerId              String   
+  seller                Seller?             @relation("sellerClient", fields: [sellerId], references: [id])
+  sellerId              String?   
   business              Business            @relation("businessClient", fields: [businessId], references: [id])
   businessId            String             
 }

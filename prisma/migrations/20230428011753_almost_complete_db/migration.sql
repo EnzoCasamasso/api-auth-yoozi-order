@@ -10,12 +10,13 @@ CREATE TABLE "Seller" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "userName" TEXT,
     "email" TEXT NOT NULL,
+    "businessName" TEXT NOT NULL,
     "businessId" TEXT NOT NULL,
     CONSTRAINT "Seller_businessId_fkey" FOREIGN KEY ("businessId") REFERENCES "Business" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateTable
-CREATE TABLE "Product" (
+CREATE TABLE "products" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "description" TEXT NOT NULL,
     "salePrice" REAL NOT NULL,
@@ -23,7 +24,7 @@ CREATE TABLE "Product" (
     "margin" INTEGER,
     "businessId" TEXT NOT NULL,
     "creationDate" DATETIME NOT NULL,
-    CONSTRAINT "Product_businessId_fkey" FOREIGN KEY ("businessId") REFERENCES "Business" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    CONSTRAINT "products_businessId_fkey" FOREIGN KEY ("businessId") REFERENCES "Business" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateTable
@@ -31,9 +32,9 @@ CREATE TABLE "Client" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "name" TEXT NOT NULL,
     "clientContactId" TEXT,
-    "sellerId" TEXT NOT NULL,
+    "sellerId" TEXT,
     "businessId" TEXT NOT NULL,
-    CONSTRAINT "Client_sellerId_fkey" FOREIGN KEY ("sellerId") REFERENCES "Seller" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "Client_sellerId_fkey" FOREIGN KEY ("sellerId") REFERENCES "Seller" ("id") ON DELETE SET NULL ON UPDATE CASCADE,
     CONSTRAINT "Client_businessId_fkey" FOREIGN KEY ("businessId") REFERENCES "Business" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
@@ -82,7 +83,7 @@ CREATE UNIQUE INDEX "Seller_userName_key" ON "Seller"("userName");
 CREATE UNIQUE INDEX "Seller_email_key" ON "Seller"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Product_description_key" ON "Product"("description");
+CREATE UNIQUE INDEX "products_description_key" ON "products"("description");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Client_clientContactId_key" ON "Client"("clientContactId");

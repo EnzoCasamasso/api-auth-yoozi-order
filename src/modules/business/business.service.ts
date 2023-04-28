@@ -1,33 +1,40 @@
+import { Seller } from '.prisma/client';
 import { Injectable } from '@nestjs/common';
+import { randomUUID } from 'node:crypto';
 import { PrismaService } from 'src/database/Prisma.service';
 import { BusinessDto } from 'src/dto/business.dto';
 import { SellerDto } from 'src/dto/seller.dto';
 import { Business } from 'src/interfaces/business';
-import { Seller } from 'src/interfaces/seller';
 @Injectable()
 export class BusinessService {
-    constructor(private readonly prisma: PrismaService) { }
+    constructor(private prisma: PrismaService) { }
 
-    async createBusiness(
-      businessDto: BusinessDto,
-      sellerDto: SellerDto[],
-    ): Promise<Business> {
-      const { id, businessName } = businessDto;
-      const sellers: Seller[] = sellerDto.map((seller) => ({
-        ...seller,
-        userName: seller.userName,
-        email: seller.email,
-        business: businessDto,
-        businessName: businessName,
-        businessId: id,
-        clients: [],
-      }))
-      return {
-        ...businessDto,
-        sellers
+    async createBusiness(businessDto: BusinessDto): Promise<Business> {
+      const { businessName, email, sellers } = businessDto;
+  
+      const business = await this.prisma.business.create({
+        data: {
+          id: randomUUID(),
+          businessName: businessName,
+          email: email,
+          sellers: {
+            create: {
+              id: randomUUID(),
+              businessName: businessName,
+              email: sellers[0].email,
+            }
+          }
+        }
+      })
+
+      return business;
     }
-  }
 
+  async getAllBusiness() {
+    const business = await this.prisma.business.findMany();
+    
+    return business
+  }
 }
 
 
