@@ -5,7 +5,6 @@ import { SellerDto } from "./seller.dto";
 
 export class BusinessDto {
     @IsString()
-    @IsNotEmpty()
     @IsUUID()
     id: string;
 
@@ -17,9 +16,8 @@ export class BusinessDto {
     @IsNotEmpty()
     email: string;
 
-    @IsArray()
     @IsNotEmpty()
-    sellers: SellerDto[];
+    sellers: SellerDto;
 
     @IsArray()
     products: ProductDto[];

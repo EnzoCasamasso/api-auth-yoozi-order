@@ -71,19 +71,10 @@ CREATE TABLE "Order" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Business_businessName_key" ON "Business"("businessName");
-
--- CreateIndex
 CREATE UNIQUE INDEX "Business_email_key" ON "Business"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Seller_userName_key" ON "Seller"("userName");
-
--- CreateIndex
 CREATE UNIQUE INDEX "Seller_email_key" ON "Seller"("email");
-
--- CreateIndex
-CREATE UNIQUE INDEX "products_description_key" ON "products"("description");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Client_clientContactId_key" ON "Client"("clientContactId");

@@ -3,7 +3,6 @@ import { ClientDto } from "./client/client.dto";
 import { BusinessDto } from "./business.dto";
 export class SellerDto {
     @IsString()
-    @IsNotEmpty()
     @IsUUID()
     id: string;
 

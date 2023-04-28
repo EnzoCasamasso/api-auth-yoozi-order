@@ -10,7 +10,7 @@ datasource db {
 
 model Business {
   id                     String             @id @default(uuid())
-  businessName           String             @unique
+  businessName           String             
   email                  String             @unique
   sellers                Seller[]           @relation("businessSellers")
   products               Product[]          @relation("businessProducts")
@@ -19,7 +19,7 @@ model Business {
 
 model Seller {
   id                     String             @id @default(uuid())
-  userName               String?            @unique
+  userName               String?            
   email                  String             @unique
   business               Business           @relation("businessSellers", fields: [businessId], references: [id])
   businessName           String             
@@ -29,7 +29,7 @@ model Seller {
 
 model Product {
   id                    String              @id @default(uuid())
-  description           String              @unique
+  description           String              
   salePrice             Float       
   costPrice             Float
   margin                Int?
