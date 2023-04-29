@@ -13,7 +13,6 @@ export class BusinessController {
         return businessDto;
     }
 
-
     @Get()
     async getAllBusiness() {
         return this.businessService.getAllBusiness();
