@@ -1,25 +1,25 @@
 import { Injectable } from '@nestjs/common';
-import { randomUUID } from 'node:crypto';
-import { PrismaService } from 'src/database/Prisma.service';
+import { PrismaService } from 'src/prisma/Prisma.service';
 import { BusinessDto } from 'src/dto/create-business.dto';
 import { Business } from 'src/entities/business.entity';
+import { Prisma } from '@prisma/client';
+import * as bcrypt from 'bcrypt';
 @Injectable()
 export class BusinessService {
     constructor(private prisma: PrismaService) { }
 
     async createBusiness(businessDto: BusinessDto): Promise<Business> {
-      const { businessName, email, password } = businessDto;
+      const data: Prisma.BusinessCreateInput = {
+        ...businessDto,
+        password: await bcrypt.hash(businessDto.password, 10),
+      };
   
-      const business = await this.prisma.business.create({
-        data: {
-          id: randomUUID(),
-          businessName: businessName,
-          email: email,
-          password: password,
-        }
-      })
+      const createdBusiness = await this.prisma.business.create({ data })
 
-      return business;
+      return {
+        ...createdBusiness,
+        password: undefined
+      };
     }
 
   async getAllBusiness() {
