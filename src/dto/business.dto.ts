@@ -1,4 +1,4 @@
-import { IsArray, IsEmail, IsNotEmpty, IsString, IsUUID } from "class-validator";
+import { IsArray, IsEmail, IsEmpty, IsNotEmpty, IsString, IsUUID } from "class-validator";
 import { ProductDto } from "./product.dto";
 import { ClientDto } from "./client/client.dto";
 import { SellerDto } from "./seller.dto";
@@ -9,19 +9,19 @@ export class BusinessDto {
     id: string;
 
     @IsString()
-    @IsNotEmpty()
+    @IsNotEmpty({message: 'Nome da empresa não pode ser vazio'})
     businessName: string;
 
     @IsEmail()
-    @IsNotEmpty()
+    @IsNotEmpty({message: 'email é obrigatório'})
     email: string;
 
-    @IsNotEmpty()
-    sellers: SellerDto;
+    @IsEmpty()
+    sellers: SellerDto[];
 
-    @IsArray()
+    @IsEmpty()
     products: ProductDto[];
 
-    @IsArray()
+    @IsEmpty()
     clients: ClientDto[];
 }

@@ -6,7 +6,7 @@ export interface Business {
     id: string;
     businessName: string;
     email: string;
-    sellers?: Seller[] 
+    sellers?: Seller[]; 
     products?: Product[];
     clients?: Client[];
 }
