@@ -15,13 +15,6 @@ export class BusinessService {
           id: randomUUID(),
           businessName: businessName,
           email: email,
-          sellers: {
-            create: {
-              id: randomUUID(),
-              businessName: businessName,
-              email: sellers.email,
-            }
-          }
         }
       })
 
