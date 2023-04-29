@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsNumber, IsString, IsUUID } from "class-validator";
-import { OrderDto } from "./order.dto";
+import { OrderDto } from "./create-order.dto";
 export class OrderItem {
     @IsUUID()
     @IsString()

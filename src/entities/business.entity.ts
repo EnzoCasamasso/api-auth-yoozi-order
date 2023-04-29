@@ -1,6 +1,6 @@
-import { Client } from "./client";
-import { Product } from "./product";
-import { Seller } from "./seller";
+import { Client } from "./client.entity";
+import { Product } from "./product.entity";
+import { Seller } from "./seller.entity";
 
 export interface Business {
     id: string;

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { randomUUID } from 'node:crypto';
 import { PrismaService } from 'src/database/Prisma.service';
-import { BusinessDto } from 'src/dto/business.dto';
-import { Business } from 'src/interfaces/business';
+import { BusinessDto } from 'src/dto/create-business.dto';
+import { Business } from 'src/entities/business.entity';
 @Injectable()
 export class BusinessService {
     constructor(private prisma: PrismaService) { }

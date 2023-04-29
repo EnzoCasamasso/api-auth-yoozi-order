@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, HttpException, HttpStatus, UsePipes, ValidationPipe } from "@nestjs/common";
 import { BusinessService } from "./business.service";
-import { BusinessDto } from "src/dto/business.dto";
+import { BusinessDto } from "src/dto/create-business.dto";
 
 @Controller("v1/business")
 export class BusinessController {
