@@ -1,6 +1,6 @@
 import { IsArray, IsEmail, IsNotEmpty, IsOptional, IsString, IsUUID } from "class-validator";
 import { ClientDto } from "./client/create-client.dto";
-import { BusinessDto } from "./create-business.dto";
+import { CreateBusinessDto } from "./create-business.dto";
 export class SellerDto {
     @IsString()
     @IsUUID()
@@ -17,7 +17,7 @@ export class SellerDto {
     password: string;
 
     @IsNotEmpty()
-    business: BusinessDto;
+    business: CreateBusinessDto;
 
     @IsString()
     @IsNotEmpty()

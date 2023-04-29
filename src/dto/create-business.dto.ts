@@ -7,7 +7,7 @@ import {
   MinLength
 } from "class-validator";
 
-export class BusinessDto {
+export class CreateBusinessDto {
     @IsString()
     @IsNotEmpty({message: 'Nome da empresa não pode ser vazio'})
     @MinLength(3)

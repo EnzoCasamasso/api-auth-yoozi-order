@@ -1,8 +1,8 @@
 import { IsArray, IsNotEmpty, IsString, IsUUID } from "class-validator";
-import { OrderItem } from "./create-orderItem.dto";
+import { CreateOrderItem } from "./create-orderItem.dto";
 import { ClientDto } from "./client/create-client.dto";
 
-export class  OrderDto {
+export class  CreateOrderDto {
     @IsString()
     @IsUUID()
     @IsNotEmpty()
@@ -16,7 +16,7 @@ export class  OrderDto {
 
     @IsNotEmpty()
     @IsArray()
-    orderItems: OrderItem[];
+    orderItems: CreateOrderItem[];
 
     @IsNotEmpty()
     @IsString()

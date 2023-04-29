@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, HttpException, HttpStatus, UsePipes, ValidationPipe } from "@nestjs/common";
 import { BusinessService } from "./business.service";
-import { BusinessDto } from "src/dto/create-business.dto";
+import { CreateBusinessDto } from "src/dto/create-business.dto";
 
 @Controller("v1/business")
 export class BusinessController {
@@ -8,7 +8,7 @@ export class BusinessController {
 
     @Post()
     @UsePipes(new ValidationPipe({ transform: true }))
-    async createBusiness(@Body() businessDto: BusinessDto): Promise<BusinessDto> {
+    async createBusiness(@Body() businessDto: CreateBusinessDto): Promise<CreateBusinessDto> {
         const business = await this.businessService.createBusiness(businessDto);
         return businessDto;
     }

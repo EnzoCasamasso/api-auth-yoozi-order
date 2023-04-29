@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/Prisma.service';
-import { BusinessDto } from 'src/dto/create-business.dto';
+import { CreateBusinessDto } from 'src/dto/create-business.dto';
 import { Business } from 'src/entities/business.entity';
 import { Prisma } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
@@ -8,7 +8,7 @@ import * as bcrypt from 'bcrypt';
 export class BusinessService {
     constructor(private prisma: PrismaService) { }
 
-    async createBusiness(businessDto: BusinessDto): Promise<Business> {
+    async createBusiness(businessDto: CreateBusinessDto): Promise<Business> {
       const data: Prisma.BusinessCreateInput = {
         ...businessDto,
         password: await bcrypt.hash(businessDto.password, 10),

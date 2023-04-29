@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsNumber, IsString, IsUUID } from "class-validator";
-import { OrderDto } from "./create-order.dto";
-export class OrderItem {
+import { CreateOrderDto } from "./create-order.dto";
+export class CreateOrderItem {
     @IsUUID()
     @IsString()
     @IsNotEmpty()
@@ -11,7 +11,7 @@ export class OrderItem {
     productName: string;
 
     @IsNotEmpty()
-    order: OrderDto; //tipar da forma correta 
+    order: CreateOrderDto; //tipar da forma correta 
 
     @IsNotEmpty()
     orderId: string;
