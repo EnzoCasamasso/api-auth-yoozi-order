@@ -6,21 +6,25 @@ import { Prisma } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 @Injectable()
 export class BusinessService {
-    constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) { }
 
-    async createBusiness(businessDto: CreateBusinessDto): Promise<Business> {
-      const data: Prisma.BusinessCreateInput = {
-        ...businessDto,
-        password: await bcrypt.hash(businessDto.password, 10),
-      };
-  
-      const createdBusiness = await this.prisma.business.create({ data })
+  async createBusiness(businessDto: CreateBusinessDto): Promise<Business> {
+    const data: Prisma.BusinessCreateInput = {
+      ...businessDto,
+      password: await bcrypt.hash(businessDto.password, 10),
+    };
 
-      return {
-        ...createdBusiness,
-        password: undefined
-      };
-    }
+    const createdBusiness = await this.prisma.business.create({ data })
+
+    return {
+      ...createdBusiness,
+      password: undefined
+    };
+  }
+
+  findByEmail(email: string) {
+    return this.prisma.business.findUnique({ where: { email } });
+  }
 
   async getAllBusiness() {
     const business = await this.prisma.business.findMany();
