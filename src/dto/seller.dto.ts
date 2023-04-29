@@ -12,6 +12,9 @@ export class SellerDto {
 
     @IsEmail()
     email: string;
+    
+    @IsNotEmpty()
+    password: string;
 
     @IsNotEmpty()
     business: BusinessDto;

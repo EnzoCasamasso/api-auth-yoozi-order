@@ -16,6 +16,9 @@ export class BusinessDto {
     @IsNotEmpty({message: 'email é obrigatório'})
     email: string;
 
+    @IsNotEmpty()
+    password: string;
+
     @IsEmpty()
     sellers: SellerDto[];
 

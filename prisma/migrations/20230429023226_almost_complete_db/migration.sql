@@ -2,7 +2,8 @@
 CREATE TABLE "Business" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "businessName" TEXT NOT NULL,
-    "email" TEXT NOT NULL
+    "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL
 );
 
 -- CreateTable
@@ -10,6 +11,7 @@ CREATE TABLE "Seller" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "userName" TEXT,
     "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
     "businessName" TEXT NOT NULL,
     "businessId" TEXT NOT NULL,
     CONSTRAINT "Seller_businessId_fkey" FOREIGN KEY ("businessId") REFERENCES "Business" ("id") ON DELETE RESTRICT ON UPDATE CASCADE

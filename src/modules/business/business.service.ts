@@ -8,13 +8,14 @@ export class BusinessService {
     constructor(private prisma: PrismaService) { }
 
     async createBusiness(businessDto: BusinessDto): Promise<Business> {
-      const { businessName, email, sellers } = businessDto;
+      const { businessName, email, password } = businessDto;
   
       const business = await this.prisma.business.create({
         data: {
           id: randomUUID(),
           businessName: businessName,
           email: email,
+          password: password,
         }
       })
 

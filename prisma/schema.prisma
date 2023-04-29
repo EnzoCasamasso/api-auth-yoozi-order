@@ -12,6 +12,7 @@ model Business {
   id                     String             @id @default(uuid())
   businessName           String             
   email                  String             @unique
+  password               String
   sellers                Seller[]           @relation("businessSellers")
   products               Product[]          @relation("businessProducts")
   clients                Client[]           @relation("businessClient")
@@ -21,6 +22,7 @@ model Seller {
   id                     String             @id @default(uuid())
   userName               String?            
   email                  String             @unique
+  password               String
   business               Business           @relation("businessSellers", fields: [businessId], references: [id])
   businessName           String             
   businessId             String
