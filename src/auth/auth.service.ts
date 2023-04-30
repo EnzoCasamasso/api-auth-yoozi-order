@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { BusinessService } from 'src/modules/business/business.service';
 import * as bcrypt from 'bcrypt' 
-import { UnauthorizedError } from './errors/unauthorizided.error';
+import { UnauthorizedError } from './errors/unauthorized.error';
 @Injectable()
 export class AuthService {
     constructor(private readonly businessService: BusinessService) {

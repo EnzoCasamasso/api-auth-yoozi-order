@@ -3,7 +3,7 @@ import { Product } from "./product.entity";
 import { Seller } from "./seller.entity";
 
 export interface Business {
-    id: string;
+    id?: string;
     businessName: string;
     email: string;
     password: string;
