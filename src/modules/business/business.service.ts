@@ -8,7 +8,7 @@ import * as bcrypt from 'bcrypt';
 export class BusinessService {
   constructor(private prisma: PrismaService) { }
 
-  async createBusiness(businessDto: CreateBusinessDto): Promise<Business> {
+  async create(businessDto: CreateBusinessDto): Promise<Business> {
     const data: Prisma.BusinessCreateInput = {
       ...businessDto,
       password: await bcrypt.hash(businessDto.password, 10),

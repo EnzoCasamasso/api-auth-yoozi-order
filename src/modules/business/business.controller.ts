@@ -7,8 +7,8 @@ export class BusinessController {
     constructor(private businessService: BusinessService) { }
 
     @Post()
-    async createBusiness(@Body() businessDto: CreateBusinessDto): Promise<CreateBusinessDto> {
-        const business = await this.businessService.createBusiness(businessDto);
+    async create(@Body() businessDto: CreateBusinessDto): Promise<CreateBusinessDto> {
+        const business = await this.businessService.create(businessDto);
         return businessDto;
     }
 

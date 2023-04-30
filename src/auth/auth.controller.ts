@@ -17,6 +17,6 @@ export class AuthController {
     @HttpCode(HttpStatus.OK)
     login(@Request() req: AuthRequest) {
         console.log(req.user)
-        return 'Realizar login';
+        return this.authService.login(req.user);
     }
 }

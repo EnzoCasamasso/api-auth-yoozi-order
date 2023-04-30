@@ -25,7 +25,7 @@ export class AuthService {
         };
       }
 
-    async validateBusinessOrSeller(email: string, password: string) {
+    async validateUser(email: string, password: string) {
         const business = await this.businessService.findByEmail(email)
 
         if (business) {
