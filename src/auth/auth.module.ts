@@ -7,10 +7,12 @@ import { AuthService } from './auth.service';
 import { LocalStrategy } from './strategies/local.strategy';
 import { BusinessModule } from 'src/modules/business/business.module';
 import { LoginValidationMiddleware } from './middlewares/login-validation.middleware';
+import { UsersModule } from 'src/modules/users/users.module';
 
 @Module({
   imports: [
     BusinessModule,
+    UsersModule,
     PassportModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,

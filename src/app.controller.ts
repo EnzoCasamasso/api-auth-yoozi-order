@@ -1,8 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { CurrentUser } from './auth/decorators/current-user.decorator';
-import { Business } from './entities/business.entity';
 import { AppService } from './app.service';
-
+import { LoggedUser } from './auth/models/LoggedUser';
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
@@ -13,7 +12,7 @@ export class AppController {
   }
 
   @Get('/me')
-  getMe(@CurrentUser() currentUser: Business) {
+  getMe(@CurrentUser() currentUser: LoggedUser) {
     return currentUser;
   }
 }

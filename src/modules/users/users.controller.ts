@@ -4,8 +4,6 @@ import { CreateSellerDto } from 'src/dto/create-seller.dto';
 import { Seller } from 'src/entities/seller.entity';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { LoggedUser } from 'src/auth/models/LoggedUser';
-
-
 @Controller('v1/user')
 export class UsersController {
   constructor(
@@ -17,7 +15,7 @@ export class UsersController {
     @Body() userDto: CreateSellerDto,
     @CurrentUser() currentUser: LoggedUser
   ): Promise<Seller> {
-    const createdUser = this.userService.createUser(userDto, currentUser)
+    const createdUser = this.userService.createUser(userDto, currentUser);
     return createdUser;
-  }
+  } 
 }

@@ -30,4 +30,8 @@ export class UsersService {
             password: undefined
           }
     }
+
+    async findByEmail(email: string): Promise<Seller> {
+      return this.prisma.seller.findUnique({ where: { email } });
+    }
 }

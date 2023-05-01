@@ -6,10 +6,12 @@ import { Business } from 'src/entities/business.entity';
 import { UserPayload } from './models/UserPayload';
 import { UserToken } from './models/UserToken';
 import { JwtService } from '@nestjs/jwt';
+import { UsersService } from 'src/modules/users/users.service';
 @Injectable()
 export class AuthService {
     constructor(
         private readonly businessService: BusinessService,
+        private readonly userService: UsersService,
         private readonly jwtService: JwtService
     ) { }
 
@@ -25,20 +27,18 @@ export class AuthService {
         };
       }
 
-    async validateUser(email: string, password: string) {
-        const business = await this.businessService.findByEmail(email)
-
-        if (business) {
-            const isPasswordValid = await bcrypt.compare(password, business.password)
-
-            if (isPasswordValid) {
-                return {
-                    ...business,
-                    password: undefined
-                }
-            }
+      async validateUser(email: string, password: string) {
+        const business = await this.businessService.findByEmail(email);
+        const seller = await this.userService.findByEmail(email);
+        const isValidPassword = business
+          ? await bcrypt.compare(password, business.password)
+          : seller
+            ? await bcrypt.compare(password, seller.password)
+            : false;
+            
+        if (isValidPassword) {
+          return business ? { ...business, password: undefined } : { ...seller, password: undefined };
         }
-
-        throw new UnauthorizedError('Email address or password provided is incorrect')
-    }
+        throw new UnauthorizedError('Email address or password provided is incorrect');
+      }
 }
