@@ -2,12 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { BusinessService } from 'src/modules/business/business.service';
 import * as bcrypt from 'bcrypt' 
 import { UnauthorizedError } from './errors/unauthorized.error';
-import { Business } from 'src/entities/business.entity';
 import { UserPayload } from './models/UserPayload';
 import { UserToken } from './models/UserToken';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/modules/users/users.service';
 import { LoggedUser } from './models/LoggedUser';
+import { TUser } from './models/UserType';
 @Injectable()
 export class AuthService {
     constructor(
@@ -16,11 +16,11 @@ export class AuthService {
         private readonly jwtService: JwtService
     ) { }
 
-    async login(business: Business): Promise<UserToken> {
+    async login(user: TUser): Promise<UserToken> {
         const payload: UserPayload = {
-          sub: business.id,
-          email: business.email,
-          name: business.businessName,
+          sub: user.id,
+          email: user.email,
+          name: user.name,
         };
     
         return {
