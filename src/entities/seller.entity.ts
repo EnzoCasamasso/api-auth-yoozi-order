@@ -5,6 +5,7 @@ export interface Seller {
     id?: string;
     userName: string;
     email: string;
+    isAdmin: boolean;
     password: string;
     business?: Business;
     businessId: string;
