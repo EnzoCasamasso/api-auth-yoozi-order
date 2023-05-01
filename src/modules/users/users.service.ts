@@ -1,9 +1,33 @@
+import { AppService } from 'src/app.service';
 import { Injectable, NotFoundException, Res } from '@nestjs/common';
 import { PrismaService } from '../../prisma/Prisma.service';
-import { SellerDto } from 'src/dto/create-seller.dto';
+import { CreateSellerDto } from 'src/dto/create-seller.dto';
+import { Business } from 'src/entities/business.entity';
+import { Prisma } from '@prisma/client';
+import { Seller } from 'src/entities/seller.entity';
 
 @Injectable()
 export class UsersService {
-    constructor(private prisma: PrismaService) { }
-    
+    constructor(
+        private prisma: PrismaService,
+        private appService: AppService
+    ) { }
+
+    async createUser(sellerDto: CreateSellerDto): Promise<Seller> {
+        const data: Prisma.SellerCreateInput = {
+          ...sellerDto,
+          business: {
+            connect: { id: this.currentUser().id }
+          }
+        }
+          const user = await this.prisma.seller.create({ data })
+      
+          return {
+            ...user,
+          }
+    }
+
+    currentUser(): Business {
+        return this.appService.userConnected();
+    }
 }

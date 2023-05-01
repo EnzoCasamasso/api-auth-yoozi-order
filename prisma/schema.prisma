@@ -29,7 +29,6 @@ model Seller {
   email                  String             @unique
   password               String
   business               Business           @relation("businessSellers", fields: [businessId], references: [id])
-  businessName           String             
   businessId             String
   clients                Client[]           @relation("sellerClient")
 }

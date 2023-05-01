@@ -14,6 +14,7 @@ export class AppController {
 
   @Get('/me')
   getMe(@CurrentUser() currentUser: Business) {
+    this.appService.conectUser(currentUser);
     return currentUser;
   }
 }
