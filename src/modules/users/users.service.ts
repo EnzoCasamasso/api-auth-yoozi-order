@@ -5,7 +5,7 @@ import { CreateSellerDto } from 'src/dto/create-seller.dto';
 import { Business } from 'src/entities/business.entity';
 import { Prisma } from '@prisma/client';
 import { Seller } from 'src/entities/seller.entity';
-
+import * as bcrypt from 'bcrypt';
 @Injectable()
 export class UsersService {
     constructor(
@@ -18,6 +18,7 @@ export class UsersService {
     ): Promise<Seller> {
         const data: Prisma.SellerCreateInput = {
           ...sellerDto,
+          password: await bcrypt.hash(sellerDto.password, 10),
           business: {
             connect: { id: currentUser.id }
           }
