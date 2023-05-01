@@ -30,6 +30,7 @@ model Seller {
   password               String
   business               Business           @relation("businessSellers", fields: [businessId], references: [id])
   businessId             String
+  isAdmin                Boolean
   clients                Client[]           @relation("sellerClient")
 }
 
@@ -56,6 +57,8 @@ model Client {
   sellerId              String?   
   business              Business            @relation("businessClient", fields: [businessId], references: [id])
   businessId            String             
+
+  @@map("clients")
 }
 
 model ClientContact {

@@ -1,11 +1,12 @@
-import { AppService } from 'src/app.service';
-import { Injectable, NotFoundException, Res } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/Prisma.service';
 import { CreateSellerDto } from 'src/dto/create-seller.dto';
 import { Business } from 'src/entities/business.entity';
 import { Prisma } from '@prisma/client';
 import { Seller } from 'src/entities/seller.entity';
 import * as bcrypt from 'bcrypt';
+import { LoggedUser } from 'src/auth/models/LoggedUser';
+
 @Injectable()
 export class UsersService {
     constructor(
@@ -14,7 +15,7 @@ export class UsersService {
 
     async createUser(
       sellerDto: CreateSellerDto,
-      currentUser: Business
+      currentUser: LoggedUser
     ): Promise<Seller> {
         const data: Prisma.SellerCreateInput = {
           ...sellerDto,
@@ -27,6 +28,7 @@ export class UsersService {
       
           return {
             ...user,
+            password: undefined
           }
     }
 }
