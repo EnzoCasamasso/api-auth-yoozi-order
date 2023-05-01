@@ -10,14 +10,16 @@ import { Seller } from 'src/entities/seller.entity';
 export class UsersService {
     constructor(
         private prisma: PrismaService,
-        private appService: AppService
     ) { }
 
-    async createUser(sellerDto: CreateSellerDto): Promise<Seller> {
+    async createUser(
+      sellerDto: CreateSellerDto,
+      currentUser: Business
+    ): Promise<Seller> {
         const data: Prisma.SellerCreateInput = {
           ...sellerDto,
           business: {
-            connect: { id: this.currentUser().id }
+            connect: { id: currentUser.id }
           }
         }
           const user = await this.prisma.seller.create({ data })
@@ -25,9 +27,5 @@ export class UsersService {
           return {
             ...user,
           }
-    }
-
-    currentUser(): Business {
-        return this.appService.userConnected();
     }
 }
