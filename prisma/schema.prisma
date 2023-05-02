@@ -21,6 +21,10 @@ model Business {
   sellers                Seller[]           @relation("businessSellers")
   products               Product[]          @relation("businessProducts")
   clients                Client[]           @relation("businessClient")
+  orders                 Order[]            @relation("orderBusiness")
+  orderItems             OrderItem[]        @relation("orderItems_business") 
+  created_at             DateTime?
+  deleted_at             DateTime?
 }
 
 model Seller {
@@ -30,6 +34,7 @@ model Seller {
   password               String
   business               Business           @relation("businessSellers", fields: [businessId], references: [id])
   businessId             String
+  orderItems             OrderItem[]        @relation("orderItems_seller") 
   isAdmin                Boolean
   clients                Client[]           @relation("sellerClient")
 }
@@ -42,7 +47,8 @@ model Product {
   margin                Int?
   business              Business            @relation("businessProducts", fields: [businessId], references: [id])
   businessId            String
-  creationDate          DateTime
+  created_at            DateTime?
+  deleted_at            DateTime?
 
   @@map("products")
 }
@@ -57,6 +63,8 @@ model Client {
   sellerId              String?   
   business              Business            @relation("businessClient", fields: [businessId], references: [id])
   businessId            String             
+  created_at            DateTime?
+  deleted_at            DateTime?
 
   @@map("clients")
 }
@@ -80,13 +88,20 @@ model OrderItem {
   orderId               String
   amount                Int
   subtotal              Float
+  seller                Seller              @relation("orderItems_seller", fields: [sellerId], references: [id])
+  sellerId              String  
+  business              Business            @relation("orderItems_business", fields: [businessId], references: [id])
+  businessId            String
 }
 
 model Order {
   id                    String              @id @default(uuid())
   client                Client              @relation("clientOrder",  fields: [clientId], references: [id])
   clientId              String
+  business              Business            @relation("orderBusiness", fields: [businessId], references: [id])
+  businessId            String              @unique
   orderItems            OrderItem[]         @relation("orderItems")
-  orderDate             DateTime
+  created_at            DateTime?
+  deleted_at            DateTime?
   totalOrder            Float
 }

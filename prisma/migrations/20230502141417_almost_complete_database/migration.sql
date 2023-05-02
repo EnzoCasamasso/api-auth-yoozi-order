@@ -4,6 +4,8 @@ CREATE TABLE "Business" (
     "businessName" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3),
+    "deleted_at" TIMESTAMP(3),
 
     CONSTRAINT "Business_pkey" PRIMARY KEY ("id")
 );
@@ -28,7 +30,8 @@ CREATE TABLE "products" (
     "costPrice" DOUBLE PRECISION NOT NULL,
     "margin" INTEGER,
     "businessId" TEXT NOT NULL,
-    "creationDate" TIMESTAMP(3) NOT NULL,
+    "created_at" TIMESTAMP(3),
+    "deleted_at" TIMESTAMP(3),
 
     CONSTRAINT "products_pkey" PRIMARY KEY ("id")
 );
@@ -40,6 +43,8 @@ CREATE TABLE "clients" (
     "clientContactId" TEXT,
     "sellerId" TEXT,
     "businessId" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3),
+    "deleted_at" TIMESTAMP(3),
 
     CONSTRAINT "clients_pkey" PRIMARY KEY ("id")
 );
@@ -65,6 +70,8 @@ CREATE TABLE "OrderItem" (
     "orderId" TEXT NOT NULL,
     "amount" INTEGER NOT NULL,
     "subtotal" DOUBLE PRECISION NOT NULL,
+    "sellerId" TEXT NOT NULL,
+    "businessId" TEXT NOT NULL,
 
     CONSTRAINT "OrderItem_pkey" PRIMARY KEY ("id")
 );
@@ -73,7 +80,9 @@ CREATE TABLE "OrderItem" (
 CREATE TABLE "Order" (
     "id" TEXT NOT NULL,
     "clientId" TEXT NOT NULL,
-    "orderDate" TIMESTAMP(3) NOT NULL,
+    "businessId" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3),
+    "deleted_at" TIMESTAMP(3),
     "totalOrder" DOUBLE PRECISION NOT NULL,
 
     CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
@@ -94,6 +103,9 @@ CREATE UNIQUE INDEX "ClientContact_clientId_key" ON "ClientContact"("clientId");
 -- CreateIndex
 CREATE UNIQUE INDEX "ClientContact_numberHouse_key" ON "ClientContact"("numberHouse");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "Order_businessId_key" ON "Order"("businessId");
+
 -- AddForeignKey
 ALTER TABLE "Seller" ADD CONSTRAINT "Seller_businessId_fkey" FOREIGN KEY ("businessId") REFERENCES "Business"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
@@ -113,4 +125,13 @@ ALTER TABLE "ClientContact" ADD CONSTRAINT "ClientContact_clientId_fkey" FOREIGN
 ALTER TABLE "OrderItem" ADD CONSTRAINT "OrderItem_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "Order"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "OrderItem" ADD CONSTRAINT "OrderItem_sellerId_fkey" FOREIGN KEY ("sellerId") REFERENCES "Seller"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "OrderItem" ADD CONSTRAINT "OrderItem_businessId_fkey" FOREIGN KEY ("businessId") REFERENCES "Business"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Order" ADD CONSTRAINT "Order_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "clients"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Order" ADD CONSTRAINT "Order_businessId_fkey" FOREIGN KEY ("businessId") REFERENCES "Business"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
