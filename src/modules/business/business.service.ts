@@ -4,12 +4,16 @@ import { CreateBusinessDto } from 'src/modules/business/dto/create-business.dto'
 import { Business } from 'src/modules/business/entities/business.entity';
 import { Prisma } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
+import { VerifyEmailService } from '../services/VerifyEmail.service';
 @Injectable()
 export class BusinessService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly veryfiEmail: VerifyEmailService
+  ) { }
 
   async create(businessDto: CreateBusinessDto): Promise<Business> {
-    const emailExists = await this.emailExists(businessDto.email);
+    const emailExists = await this.veryfiEmail.isEmailAlreadyRegistred(businessDto.email);
 
     if (emailExists) {
         throw new HttpException('Email already exists', HttpStatus.CONFLICT);
@@ -28,16 +32,6 @@ export class BusinessService {
     };
 }
 
-  async emailExists(email: string): Promise<boolean> {
-    const business = await this.prisma.business.findUnique({
-      where: { email }
-    })
-
-    if (business?.email) {
-      return true;
-    } 
-    return false;     
-  }
 
   findByEmail(email: string) {
     return this.prisma.business.findUnique({ where: { email } });

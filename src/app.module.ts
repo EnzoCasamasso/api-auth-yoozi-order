@@ -10,6 +10,7 @@ import { AppService } from './app.service';
 import { OrderModule } from './modules/order/order.module';
 import { ClientModule } from './modules/client/client.module';
 import { ProductModule } from './modules/product/product.module';
+import { ServicesModule } from './modules/services/services.module';
 @Module({
   imports: [
     PrismaModule,
@@ -19,6 +20,7 @@ import { ProductModule } from './modules/product/product.module';
     OrderModule,
     ClientModule,
     ProductModule,
+    ServicesModule,
   ],
   controllers: [AppController],
   providers: [
