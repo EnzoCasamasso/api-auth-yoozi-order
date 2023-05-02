@@ -1,6 +1,6 @@
 import { IsArray, IsNotEmpty, IsOptional, IsString, IsUUID } from "class-validator";
 
-export class ClientDto {
+export class CreateClientDto {
     @IsString()
     @IsUUID()
     @IsNotEmpty()

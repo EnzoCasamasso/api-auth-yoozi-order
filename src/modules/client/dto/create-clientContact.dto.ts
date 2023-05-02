@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsString, IsUUID} from "class-validator";
-import { ClientDto } from "./create-client.dto";
+import { CreateClientDto } from "./create-client.dto";
 
 export class ClientContactDto {
     @IsUUID()
@@ -9,7 +9,7 @@ export class ClientContactDto {
 
     @IsNotEmpty()
     @IsNotEmpty()
-    client: ClientDto;
+    client: CreateClientDto;
 
     @IsString()
     @IsNotEmpty()
