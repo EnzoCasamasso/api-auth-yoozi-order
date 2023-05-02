@@ -2,13 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { BusinessService } from 'src/modules/business/business.service';
 import * as bcrypt from 'bcrypt' 
 import { UnauthorizedError } from './errors/unauthorized.error';
+import { Business } from 'src/modules/business/entities/business.entity';
 import { UserPayload } from './models/UserPayload';
 import { UserToken } from './models/UserToken';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/modules/users/users.service';
-import { AuthRequest } from './models/AuthRequest';
-import { Seller } from 'src/modules/users/entities/seller.entity';
-import { Business } from 'src/modules/business/entities/business.entity';
+import { LoggedUser } from './models/LoggedUser';
 @Injectable()
 export class AuthService {
     constructor(
@@ -17,11 +16,11 @@ export class AuthService {
         private readonly jwtService: JwtService
     ) { }
 
-    async login(user: AuthRequest): Promise<UserToken> {
+    async login(business: Business): Promise<UserToken> {
         const payload: UserPayload = {
-          sub: user.id,
-          email: user.email,
-          name: user.name,
+          sub: business.id,
+          email: business.email,
+          name: business.businessName,
         };
     
         return {
@@ -29,7 +28,7 @@ export class AuthService {
         };
       }
 
-      async validateUser(email: string, password: string): Promise<Business | Seller> {
+      async validateUser(email: string, password: string): Promise<LoggedUser> {
         const business = await this.businessService.findByEmail(email);
         const seller = await this.userService.findByEmail(email);
         const isValidPassword = business
