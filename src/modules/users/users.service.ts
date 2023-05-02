@@ -4,7 +4,7 @@ import { CreateSellerDto } from 'src/modules/users/dto/create-seller.dto';
 import { Prisma } from '@prisma/client';
 import { Seller } from 'src/modules/users/entities/seller.entity';
 import * as bcrypt from 'bcrypt';
-import { CurrentUserLogged } from 'src/auth/models/CurrentUser';
+import { AuthUser } from 'src/auth/models/AuthUser';
 
 @Injectable()
 export class UsersService {
@@ -14,7 +14,7 @@ export class UsersService {
 
     async createUser(
       sellerDto: CreateSellerDto,
-      currentUser: CurrentUserLogged
+      currentUser: AuthUser
     ): Promise<Seller> {
         const data: Prisma.SellerCreateInput = {
           ...sellerDto,

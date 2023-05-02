@@ -1,6 +1,6 @@
 import { Request } from 'express';
-import { Business } from 'src/modules/business/entities/business.entity';
+import { AuthUser } from './AuthUser';
 
 export interface AuthRequest extends Request {
-  user: Business;
+  user: AuthUser;
 }

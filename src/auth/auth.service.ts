@@ -7,7 +7,8 @@ import { UserPayload } from './models/UserPayload';
 import { UserToken } from './models/UserToken';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/modules/users/users.service';
-import { LoggedUser } from './models/LoggedUser';
+import { AuthUserTransform } from './models/LoggedUser';
+import { AuthUser } from './models/AuthUser';
 @Injectable()
 export class AuthService {
     constructor(
@@ -16,11 +17,11 @@ export class AuthService {
         private readonly jwtService: JwtService
     ) { }
 
-    async login(business: Business): Promise<UserToken> {
+    async login(user: AuthUser): Promise<UserToken> {
         const payload: UserPayload = {
-          sub: business.id,
-          email: business.email,
-          name: business.businessName,
+          sub: user.id,
+          email: user.email,
+          name: user.name,
         };
     
         return {
@@ -28,7 +29,7 @@ export class AuthService {
         };
       }
 
-      async validateUser(email: string, password: string): Promise<LoggedUser> {
+      async validateUser(email: string, password: string): Promise<AuthUserTransform > {
         const business = await this.businessService.findByEmail(email);
         const seller = await this.userService.findByEmail(email);
         const isValidPassword = business
