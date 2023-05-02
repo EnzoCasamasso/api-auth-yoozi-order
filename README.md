@@ -1,4 +1,4 @@
-<img src="prisma/prisma.erd.svg" alt="descrição da imagem">
+<img src="prisma/prisma-erd.svg" alt="descrição da imagem">
 
 ## Description
 
