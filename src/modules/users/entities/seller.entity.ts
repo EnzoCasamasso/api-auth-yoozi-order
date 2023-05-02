@@ -1,5 +1,5 @@
-import { Business } from "./business.entity";
-import { Client } from "./client.entity";
+import { Business } from "../../business/entities/business.entity";
+import { Client } from "../../client/entities/client.entity";
 
 export interface Seller {
     id?: string;

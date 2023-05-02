@@ -7,12 +7,18 @@ import { BusinessModule } from './modules/business/business.module';
 import { UsersModule } from './modules/users/users.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { AppService } from './app.service';
+import { OrderModule } from './modules/order/order.module';
+import { ClientModule } from './modules/client/client.module';
+import { ProductModule } from './modules/product/product.module';
 @Module({
   imports: [
     PrismaModule,
     BusinessModule,
     UsersModule,
-    AuthModule
+    AuthModule,
+    OrderModule,
+    ClientModule,
+    ProductModule,
   ],
   controllers: [AppController],
   providers: [

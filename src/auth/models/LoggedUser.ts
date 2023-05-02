@@ -1,5 +1,5 @@
-import { Business } from "src/entities/business.entity";
-import { Seller } from "src/entities/seller.entity";
+import { Business } from "src/modules/business/entities/business.entity";
+import { Seller } from "src/modules/users/entities/seller.entity";
 
-export type LoggedUser = Business | Seller
+export type LoggedUser = Business | Seller;
 

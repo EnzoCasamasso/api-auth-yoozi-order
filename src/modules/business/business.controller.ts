@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post, UseGuards } from "@nestjs/common";
 import { BusinessService } from "./business.service";
-import { CreateBusinessDto } from "src/dto/create-business.dto";
-import { Business } from "src/entities/business.entity";
+import { CreateBusinessDto } from "src/modules/business/dto/create-business.dto";
+import { Business } from "src/modules/business/entities/business.entity";
 import { IsPublic } from "src/auth/decorators/is-public.decorator";
 @Controller("v1/business")
 export class BusinessController {
