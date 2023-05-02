@@ -4,7 +4,6 @@ import { CreateSellerDto } from 'src/modules/users/dto/create-seller.dto';
 import { Prisma } from '@prisma/client';
 import { Seller } from 'src/modules/users/entities/seller.entity';
 import * as bcrypt from 'bcrypt';
-import { LoggedUser } from 'src/auth/models/LoggedUser';
 import { AuthRequest } from 'src/auth/models/AuthRequest';
 
 @Injectable()

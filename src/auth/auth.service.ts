@@ -6,8 +6,9 @@ import { UserPayload } from './models/UserPayload';
 import { UserToken } from './models/UserToken';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/modules/users/users.service';
-import { LoggedUser } from './models/LoggedUser';
 import { AuthRequest } from './models/AuthRequest';
+import { Seller } from 'src/modules/users/entities/seller.entity';
+import { Business } from 'src/modules/business/entities/business.entity';
 @Injectable()
 export class AuthService {
     constructor(
@@ -28,7 +29,7 @@ export class AuthService {
         };
       }
 
-      async validateUser(email: string, password: string): Promise<LoggedUser> {
+      async validateUser(email: string, password: string): Promise<Business | Seller> {
         const business = await this.businessService.findByEmail(email);
         const seller = await this.userService.findByEmail(email);
         const isValidPassword = business
