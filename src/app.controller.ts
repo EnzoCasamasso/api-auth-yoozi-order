@@ -13,6 +13,9 @@ export class AppController {
 
   @Get('/me')
   async getMe(@CurrentUser() currentUser: AuthUser): Promise<AuthUser> {
-    return currentUser;
+    return {
+      ...currentUser,
+      password: undefined
+    }
   }
 }

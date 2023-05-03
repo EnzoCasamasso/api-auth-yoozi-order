@@ -13,6 +13,10 @@ $ npm install
 ## Database configuration
 
 <div>
+    <h1>
+        .env
+    </h1>
+
     JWT_SECRET="JWT PASSWORD"
 
     <!-- DATABASE_URL="file:./dev.db"  -->
