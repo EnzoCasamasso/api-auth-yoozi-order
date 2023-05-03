@@ -10,4 +10,6 @@ export interface Business {
     sellers?: Seller[]; 
     products?: Product[];
     clients?: Client[];
+    created_at: Date;
+    deleted_at: Date;
 }

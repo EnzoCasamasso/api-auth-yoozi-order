@@ -21,6 +21,7 @@ export class BusinessService {
 
     const data: Prisma.BusinessCreateInput = {
         ...businessDto,
+        created_at:  new Date(Date.now()),
         password: await bcrypt.hash(businessDto.password, 10),
     };
 
@@ -28,10 +29,10 @@ export class BusinessService {
 
     return {
         ...createdBusiness,
+        deleted_at: undefined,
         password: undefined,
     };
-}
-
+  }
 
   findByEmail(email: string) {
     return this.prisma.business.findUnique({ where: { email } });
@@ -39,8 +40,7 @@ export class BusinessService {
 
   async getAllBusiness() {
     const business = await this.prisma.business.findMany();
-    
-    return business
+    return business;
   }
 }
 

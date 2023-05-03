@@ -13,6 +13,6 @@ export class AppController {
 
   @Get('/me')
   async getMe(@CurrentUser() currentUser: User): Promise<User> {
-    return {...currentUser}
+    return { ...currentUser }
   }
 }
