@@ -4,8 +4,8 @@ import { CreateSellerDto } from 'src/modules/users/dto/create-seller.dto';
 import { Prisma } from '@prisma/client';
 import { Seller } from 'src/modules/users/entities/seller.entity';
 import * as bcrypt from 'bcrypt';
-import { AuthUser } from 'src/auth/models/AuthUser';
 import { VerifyEmailService } from '../services/VerifyEmail.service';
+import { User } from 'src/auth/models/User';
 
 @Injectable()
 export class UsersService {
@@ -16,7 +16,7 @@ export class UsersService {
 
     async createUser(
       sellerDto: CreateSellerDto,
-      currentUser: AuthUser
+      currentUser: User
     ): Promise<Seller> {
       const emailExists = await this.verifyEmail.isEmailAlreadyRegistred(sellerDto.email);
 

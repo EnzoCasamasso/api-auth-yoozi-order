@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { CurrentUser } from './auth/decorators/current-user.decorator';
 import { AppService } from './app.service';
-import { AuthUser } from './auth/models/AuthUser';
+import { User } from './auth/models/User';
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
@@ -12,10 +12,7 @@ export class AppController {
   }
 
   @Get('/me')
-  async getMe(@CurrentUser() currentUser: AuthUser): Promise<AuthUser> {
-    return {
-      ...currentUser,
-      password: undefined
-    }
+  async getMe(@CurrentUser() currentUser: User): Promise<User> {
+    return {...currentUser}
   }
 }

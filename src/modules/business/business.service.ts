@@ -9,11 +9,11 @@ import { VerifyEmailService } from '../services/VerifyEmail.service';
 export class BusinessService {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly veryfiEmail: VerifyEmailService
+    private readonly verifyEmail: VerifyEmailService
   ) { }
 
   async create(businessDto: CreateBusinessDto): Promise<Business> {
-    const emailExists = await this.veryfiEmail.isEmailAlreadyRegistred(businessDto.email);
+    const emailExists = await this.verifyEmail.isEmailAlreadyRegistred(businessDto.email);
 
     if (emailExists) {
         throw new HttpException('Email already exists', HttpStatus.CONFLICT);

@@ -8,7 +8,7 @@ import { UserToken } from './models/UserToken';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/modules/users/users.service';
 import { AuthUserTransform } from './models/LoggedUser';
-import { AuthUser } from './models/AuthUser';
+import { User } from './models/User';
 @Injectable()
 export class AuthService {
     constructor(
@@ -17,7 +17,7 @@ export class AuthService {
         private readonly jwtService: JwtService
     ) { }
 
-    async login(user: AuthUser): Promise<UserToken> {
+    async login(user: User): Promise<UserToken> {
         const payload: UserPayload = {
           sub: user.id,
           email: user.email,
