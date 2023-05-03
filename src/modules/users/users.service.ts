@@ -18,6 +18,10 @@ export class UsersService {
       sellerDto: CreateSellerDto,
       currentUser: User
     ): Promise<Seller> {
+      if (!currentUser.isAdmin) {
+        throw new HttpException("User is not admin", HttpStatus.BAD_REQUEST)
+      }
+
       const emailExists = await this.verifyEmail.isEmailAlreadyRegistred(sellerDto.email);
 
       if (emailExists) {
@@ -37,17 +41,6 @@ export class UsersService {
             ...user,
             password: undefined
           }
-    }
-
-    async isEmailAlredyRegistred(email: string): Promise<boolean> {
-      const seller = await this.prisma.seller.findUnique({
-        where: { email }
-      })
-  
-      if (seller?.email) {
-        return true;
-      } 
-      return false;     
     }
 
     async findByEmail(email: string): Promise<Seller> {

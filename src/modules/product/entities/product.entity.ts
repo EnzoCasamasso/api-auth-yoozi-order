@@ -1,7 +1,9 @@
 export interface Product {
-    id?:string;
+    id?: string;
+    businessId: string;
     description: string;
     salePrice: number;
     coastPrice: number;
-    productStock: number
+    created_at: Date;
+    deleted_at?: Date;
 }

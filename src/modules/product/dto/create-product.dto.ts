@@ -10,6 +10,5 @@ export class CreateProductDto {
     salePrice: number;
 
     @IsNumber()
-    @IsNotEmpty()
-    costPrice: number;
+    coastPrice: number;
 }
