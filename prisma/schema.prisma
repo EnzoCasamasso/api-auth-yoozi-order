@@ -41,15 +41,43 @@ model Seller {
 
 model Product {
   id                    String              @id @default(uuid())
+  productStock          ProductStock        @relation("productStock", fields: [productStockId], references: [id])
+  productStockId        String              @unique
   description           String              
   salePrice             Float       
-  coastPrice             Float
+  coastPrice            Float
   business              Business            @relation("businessProducts", fields: [businessId], references: [id])
   businessId            String
   created_at            DateTime?
   deleted_at            DateTime?
 
   @@map("products")
+}
+
+model ProductStock {
+  id                    String              @id @default(uuid())
+  product               Product?            @relation("productStock")
+  productId             String              @unique
+  unityMeasurement      UnityMeasurement
+  currentInventory      Int
+  previousStock         Int?
+  currentWeight         Float?
+  previousWeight        Float?
+  lastSale              DateTime?
+  lastEntry             DateTime?
+  lastModification      DateTime?
+  lastEntryLogin        String?
+  lastSaleLogin         String?
+  deleted_at            DateTime?
+
+  @@map("product_stocks")
+}
+
+enum UnityMeasurement {
+  L
+  M
+  KG
+  UN
 }
 
 model Client {

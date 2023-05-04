@@ -1,3 +1,6 @@
+-- CreateEnum
+CREATE TYPE "UnityMeasurement" AS ENUM ('L', 'M', 'KG', 'UN');
+
 -- CreateTable
 CREATE TABLE "Business" (
     "id" TEXT NOT NULL,
@@ -25,6 +28,7 @@ CREATE TABLE "Seller" (
 -- CreateTable
 CREATE TABLE "products" (
     "id" TEXT NOT NULL,
+    "productStockId" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "salePrice" DOUBLE PRECISION NOT NULL,
     "coastPrice" DOUBLE PRECISION NOT NULL,
@@ -33,6 +37,25 @@ CREATE TABLE "products" (
     "deleted_at" TIMESTAMP(3),
 
     CONSTRAINT "products_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "product_stocks" (
+    "id" TEXT NOT NULL,
+    "productId" TEXT NOT NULL,
+    "unityMeasurement" "UnityMeasurement" NOT NULL,
+    "currentInventory" INTEGER NOT NULL,
+    "previousStock" INTEGER,
+    "currentWeight" DOUBLE PRECISION,
+    "previousWeight" DOUBLE PRECISION NOT NULL,
+    "lastSale" TIMESTAMP(3),
+    "lastEntry" TIMESTAMP(3),
+    "lastModification" TIMESTAMP(3),
+    "lastEntryLogin" TEXT,
+    "lastSaleLogin" TEXT,
+    "deleted_at" TIMESTAMP(3),
+
+    CONSTRAINT "product_stocks_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -94,6 +117,12 @@ CREATE UNIQUE INDEX "Business_email_key" ON "Business"("email");
 CREATE UNIQUE INDEX "Seller_email_key" ON "Seller"("email");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "products_productStockId_key" ON "products"("productStockId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "product_stocks_productId_key" ON "product_stocks"("productId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "clients_clientContactId_key" ON "clients"("clientContactId");
 
 -- CreateIndex
@@ -107,6 +136,9 @@ CREATE UNIQUE INDEX "Order_businessId_key" ON "Order"("businessId");
 
 -- AddForeignKey
 ALTER TABLE "Seller" ADD CONSTRAINT "Seller_businessId_fkey" FOREIGN KEY ("businessId") REFERENCES "Business"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "products" ADD CONSTRAINT "products_productStockId_fkey" FOREIGN KEY ("productStockId") REFERENCES "product_stocks"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "products" ADD CONSTRAINT "products_businessId_fkey" FOREIGN KEY ("businessId") REFERENCES "Business"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

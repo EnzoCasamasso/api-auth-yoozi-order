@@ -5,17 +5,27 @@ import { PrismaService } from 'src/prisma/Prisma.service';
 import { Prisma } from '@prisma/client';
 import { User } from 'src/auth/models/User';
 import { Product } from './entities/product.entity';
+import { ProductStockService } from './productStock/productStock.service';
 @Injectable()
 export class ProductService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private prisma: PrismaService, private productStock: ProductStockService) { }
 
   async create(createProductDto: CreateProductDto, currentUser: User): Promise<Product> {
+    const { id, stockDto } = createProductDto;
+    const productStock = await this.productStock.createStock(stockDto,id)
+
     const data: Prisma.ProductCreateInput = {
       ...createProductDto,
       created_at: new Date(Date.now()),
       business: {
         connect: {id: currentUser.id}
       },
+      productStock: {
+        create: {
+          ...productStock,
+          previousWeight: stockDto.previusWeight
+        }
+      }
     }
 
     const product = await this.prisma.product.create({ data })
