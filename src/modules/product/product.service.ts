@@ -3,32 +3,51 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { PrismaService } from 'src/prisma/Prisma.service';
 import { Prisma } from '@prisma/client';
-import { User } from 'src/auth/models/User';
 import { Product } from './entities/product.entity';
-import { ProductStockService } from './productStock/productStock.service';
 import { UnauthorizedError } from 'src/auth/errors/unauthorized.error';
 @Injectable()
 export class ProductService {
-  constructor(private prisma: PrismaService, private productStock: ProductStockService) { }
+  constructor(private prisma: PrismaService) { }
 
   async create(
     createProductDto: CreateProductDto,
-    currentUserId: string
+    currentUserId: string,
   ): Promise<Product> {
-    if(!currentUserId) throw new UnauthorizedError("cannot access")
+    const { stock, ...productData } = createProductDto;
 
-    const data: Prisma.ProductCreateInput = {
-      ...createProductDto,
-      created_at: new Date(Date.now()),
-      business: {
-        connect: { id: currentUserId },
+    return this.prisma.$transaction(async (prisma) => {
+      const data: Prisma.ProductCreateInput = {
+        ...productData,
+        business: {
+          connect: {id: currentUserId}
+        }
       }
-    };
-    const product = await this.prisma.product.create({ data }); 
-    
-    return {
-      ...product,
-    }
+
+      const product = await prisma.product.create({
+        data
+      });
+
+      if (stock) {
+
+        const stockData: Prisma.ProductStockCreateInput = {
+          productId: product.id,
+          currentInventory: stock.currentInventory,
+          unityMeasurement: stock.unityMeasurement  
+        }
+
+        await prisma.productStock.create({
+          data: {
+            ...stockData,
+            product: {
+              connect: { id: product.id },
+            },
+          }
+        });
+      }
+
+      return product;
+
+    });
   }
 
   findAll() {

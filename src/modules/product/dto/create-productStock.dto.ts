@@ -17,23 +17,6 @@ export class CreateProductStockDto {
     @IsOptional()    
     previusWeight?: number;
 
-    @IsOptional()
-    lastSale?: Date;
-
-    @IsOptional()
-    lastEntry?: Date;
-
-    @IsOptional()
-    lastModification?: Date;
-
-    @IsOptional()
-    lastEntryLogin?: string;
-
-    @IsOptional()
-    lastSaleLogin?: string;
-
-    @IsOptional()
-    deleted_at?: Date;
 }
 
 
