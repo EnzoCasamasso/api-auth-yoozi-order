@@ -28,7 +28,7 @@ CREATE TABLE "Seller" (
 -- CreateTable
 CREATE TABLE "products" (
     "id" TEXT NOT NULL,
-    "productStockId" TEXT NOT NULL,
+    "productStockId" TEXT,
     "description" TEXT NOT NULL,
     "salePrice" DOUBLE PRECISION NOT NULL,
     "coastPrice" DOUBLE PRECISION NOT NULL,
@@ -47,7 +47,7 @@ CREATE TABLE "product_stocks" (
     "currentInventory" INTEGER NOT NULL,
     "previousStock" INTEGER,
     "currentWeight" DOUBLE PRECISION,
-    "previousWeight" DOUBLE PRECISION NOT NULL,
+    "previousWeight" DOUBLE PRECISION,
     "lastSale" TIMESTAMP(3),
     "lastEntry" TIMESTAMP(3),
     "lastModification" TIMESTAMP(3),
@@ -138,7 +138,7 @@ CREATE UNIQUE INDEX "Order_businessId_key" ON "Order"("businessId");
 ALTER TABLE "Seller" ADD CONSTRAINT "Seller_businessId_fkey" FOREIGN KEY ("businessId") REFERENCES "Business"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "products" ADD CONSTRAINT "products_productStockId_fkey" FOREIGN KEY ("productStockId") REFERENCES "product_stocks"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "products" ADD CONSTRAINT "products_productStockId_fkey" FOREIGN KEY ("productStockId") REFERENCES "product_stocks"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "products" ADD CONSTRAINT "products_businessId_fkey" FOREIGN KEY ("businessId") REFERENCES "Business"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

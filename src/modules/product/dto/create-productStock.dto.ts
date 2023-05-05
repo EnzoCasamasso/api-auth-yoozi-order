@@ -2,12 +2,6 @@ import { UnityMeasurement } from '../entities/productStock.entity';
 import { IsEnum, IsNotEmpty, IsNumber, IsOptional, IsUUID } from 'class-validator';
 
 export class CreateProductStockDto {
-    @IsUUID()
-    id?: string;
-
-    @IsNotEmpty()
-    productId: string;
-
     @IsNumber()
     currentInventory: number;
 
@@ -17,10 +11,10 @@ export class CreateProductStockDto {
     @IsEnum(UnityMeasurement)
     unityMeasurement: UnityMeasurement;
 
-    @IsNumber()
+    @IsOptional()
     currentWeight?: number;
 
-    @IsNumber()
+    @IsOptional()    
     previusWeight?: number;
 
     @IsOptional()

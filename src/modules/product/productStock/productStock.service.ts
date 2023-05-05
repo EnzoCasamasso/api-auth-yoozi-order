@@ -6,32 +6,30 @@ import { CreateProductStockDto } from "../dto/create-productStock.dto";
 
 @Injectable()
 export class ProductStockService {
-    constructor(private readonly prisma: PrismaService) {}
+    constructor(private readonly prisma: PrismaService) { }
 
     async createStock(
         stockDto: CreateProductStockDto,
         productId: string
-    ): Promise<ProductStock> {
-        const { unityMeasurement } = stockDto;
+      ): Promise<ProductStock> {
+        const { unityMeasurement }= stockDto;
         const data: Prisma.ProductStockCreateInput = {
-            ...stockDto,
-            unityMeasurement: unityMeasurement,
-            product: {
-                connect: { id: productId }
-            }
+          ...stockDto,
+          productId: productId,
+          product: {
+            connect: { id: productId }
+          }
         };
     
-        const createdProductStock = await this.prisma.productStock.create({
-            data: {
-                ...data,
-                previousStock: data.previousStock ?? 0 
-            },
-            include: { product: true }
-        });
+        const createdProductStock = await this.prisma.productStock.create({ data })
     
-        return { 
-            ...createdProductStock,
-            unityMeasurement: unityMeasurement
+        return {
+          ...createdProductStock,
+          id: createdProductStock.id,
+          unityMeasurement,
+          productId: createdProductStock.productId,
+          currentInventory: createdProductStock.currentInventory,
+          previousStock: createdProductStock.previousStock
         };
-    }
+     }
 }

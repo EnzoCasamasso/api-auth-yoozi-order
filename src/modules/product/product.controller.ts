@@ -5,7 +5,8 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { Product } from './entities/product.entity';
 import { User } from 'src/auth/models/User';
-@Controller('product')
+import { UnauthorizedError } from 'src/auth/errors/unauthorized.error';
+@Controller('v1/product')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
@@ -14,8 +15,12 @@ export class ProductController {
     @Body() createProductDto: CreateProductDto,
     @CurrentUser() currentUser: User
   ): Promise<Product> {
-    const product =  this.productService.create(createProductDto, currentUser);
-    return product;
+    if (currentUser?.id) {
+      const product =  this.productService.create(createProductDto, currentUser.id);
+      return product;
+    }
+
+    throw new UnauthorizedError("cannot access this route")    
   }
 
   @Get()
@@ -38,3 +43,5 @@ export class ProductController {
     return this.productService.remove(+id);
   }
 }
+
+

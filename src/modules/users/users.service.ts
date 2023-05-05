@@ -18,9 +18,9 @@ export class UsersService {
       sellerDto: CreateSellerDto,
       currentUser: User
     ): Promise<Seller> {
-      if (!currentUser.isAdmin) {
-        throw new HttpException("User is not admin", HttpStatus.BAD_REQUEST)
-      }
+      // if (!currentUser.isAdmin) {
+      //   throw new HttpException("User is not admin", HttpStatus.BAD_REQUEST)
+      // }
 
       const emailExists = await this.verifyEmail.isEmailAlreadyRegistred(sellerDto.email);
 

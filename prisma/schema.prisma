@@ -41,8 +41,8 @@ model Seller {
 
 model Product {
   id                    String              @id @default(uuid())
-  productStock          ProductStock        @relation("productStock", fields: [productStockId], references: [id])
-  productStockId        String              @unique
+  productStock          ProductStock?       @relation("productStock", fields: [productStockId], references: [id])
+  productStockId        String?              @unique
   description           String              
   salePrice             Float       
   coastPrice            Float

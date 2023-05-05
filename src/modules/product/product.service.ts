@@ -6,31 +6,27 @@ import { Prisma } from '@prisma/client';
 import { User } from 'src/auth/models/User';
 import { Product } from './entities/product.entity';
 import { ProductStockService } from './productStock/productStock.service';
+import { UnauthorizedError } from 'src/auth/errors/unauthorized.error';
 @Injectable()
 export class ProductService {
   constructor(private prisma: PrismaService, private productStock: ProductStockService) { }
 
-  async create(createProductDto: CreateProductDto, currentUser: User): Promise<Product> {
-    const { id, stockDto } = createProductDto;
-    const productStock = await this.productStock.createStock(stockDto,id)
+  async create(
+    createProductDto: CreateProductDto,
+    currentUserId: string
+  ): Promise<Product> {
+    if(!currentUserId) throw new UnauthorizedError("cannot access")
 
     const data: Prisma.ProductCreateInput = {
       ...createProductDto,
       created_at: new Date(Date.now()),
       business: {
-        connect: {id: currentUser.id}
-      },
-      productStock: {
-        create: {
-          ...productStock,
-          previousWeight: stockDto.previusWeight
-        }
+        connect: { id: currentUserId },
       }
-    }
-
-    const product = await this.prisma.product.create({ data })
-
-    return { 
+    };
+    const product = await this.prisma.product.create({ data }); 
+    
+    return {
       ...product,
     }
   }
