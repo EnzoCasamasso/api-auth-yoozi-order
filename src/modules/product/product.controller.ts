@@ -1,26 +1,36 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Res, HttpException, HttpStatus } from '@nestjs/common';
+import { Response } from 'express';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
-import { Product } from './entities/product.entity';
 import { User } from 'src/auth/models/User';
-import { UnauthorizedError } from 'src/auth/errors/unauthorized.error';
 @Controller('v1/product')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @Post()
-  create(
+  async create(
     @Body() createProductDto: CreateProductDto,
+    @Res() res: Response,
     @CurrentUser() currentUser: User
-  ): Promise<Product> {
-    if (currentUser?.id) {
-      const product =  this.productService.create(createProductDto, currentUser.id);
-      return product;
+  ): Promise<void> {
+    if (!currentUser?.id) {
+      throw new HttpException("Unauthorized error", HttpStatus.UNAUTHORIZED)
     }
+    
+    try {
+      const product = await this.productService.create(createProductDto, currentUser.id);
 
-    throw new UnauthorizedError("cannot access this route")    
+      res.status(201).send({
+        ...product
+      })
+
+    } catch (error) {
+      res.send({
+        error: error.message
+      })
+    }
   }
 
   @Get()

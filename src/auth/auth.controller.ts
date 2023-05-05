@@ -5,7 +5,7 @@ import { LocalAuthGuard } from './guards/local-auth.guard';
 import { IsPublic } from './decorators/is-public.decorator';
 import { AuthRequest } from './models/AuthRequest';
 import { UserToken } from './models/UserToken';
-@Controller()
+@Controller('v1/login')
 export class AuthController {
     constructor(
         private readonly authService: AuthService

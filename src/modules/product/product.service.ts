@@ -23,9 +23,7 @@ export class ProductService {
         }
       }
 
-      const product = await prisma.product.create({
-        data
-      });
+      const product = await prisma.product.create({ data });
 
       if (stock) {
 
@@ -46,11 +44,12 @@ export class ProductService {
 
         return {
           ...product,
+          productStockId: stockData.id,
           ...stockData
         }
       }
 
-      return product;
+      return { ...product };
 
     });
   }
