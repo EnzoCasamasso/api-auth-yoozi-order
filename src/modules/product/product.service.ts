@@ -29,20 +29,25 @@ export class ProductService {
 
       if (stock) {
 
-        const stockData: Prisma.ProductStockCreateInput = {
+        const stockInput: Prisma.ProductStockCreateInput = {
           productId: product.id,
           currentInventory: stock.currentInventory,
           unityMeasurement: stock.unityMeasurement  
         }
 
-        await prisma.productStock.create({
+        const stockData = await prisma.productStock.create({
           data: {
-            ...stockData,
+            ...stockInput,
             product: {
               connect: { id: product.id },
             },
           }
         });
+
+        return {
+          ...product,
+          ...stockData
+        }
       }
 
       return product;
