@@ -18,18 +18,20 @@ export class AuthService {
     ) { }
 
     async login(user: User): Promise<UserToken> {
-        const payload: UserPayload = {
-          sub: user.id,
-          email: user.email,
-          name: user.name,
-        };
+      const payload: UserPayload = {
+        sub: user.id,
+        email: user.email,
+        name: user.name,
+        isAdmin: user.isAdmin,
+      };
     
-        return {
-          access_token: this.jwtService.sign(payload),
-        };
+      return {
+        access_token: this.jwtService.sign(payload),
+      };
+    
       }
 
-      async validateUser(email: string, password: string): Promise<AuthUserTransform > {
+      async validateUser(email: string, password: string): Promise<AuthUserTransform> {
         const business = await this.businessService.findByEmail(email);
         const seller = await this.userService.findByEmail(email);
         const isValidPassword = business

@@ -4,7 +4,6 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { PrismaService } from 'src/prisma/Prisma.service';
 import { Prisma } from '@prisma/client';
 import { Product } from './entities/product.entity';
-import { UnauthorizedError } from 'src/auth/errors/unauthorized.error';
 @Injectable()
 export class ProductService {
   constructor(private prisma: PrismaService) { }
@@ -49,13 +48,13 @@ export class ProductService {
         }
       }
 
-      return { ...product };
+    return { ...product };
 
     });
   }
 
-  findAll() {
-    return `This action returns all product`;
+  findAll(): Promise<Product[]> {
+    return this.prisma.product.findMany();
   }
 
   findOne(id: number) {

@@ -40,6 +40,7 @@ export class ProductController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
+    console.log(id);
     return this.productService.findOne(+id);
   }
 
